@@ -1,0 +1,61 @@
+{% extends "root.html" %}
+{% load static %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'home/index.css' %}">
+{% endblock %}
+
+{% block content %}
+<h1 id="view_tasks">view tasks</h1>
+<hr>
+<hr>
+<div class="container_tasks">
+    {% if not tasks %}
+       <p style="margin-top:2.3em;">NO AVALAIBLE TASKS!</p>
+    {% else %}
+        {% for task in tasks %}
+        <div class="tasks">
+            <p>📝 Task: {{ task.title }}
+            📁 Category: {{ task.category }}
+            🏷️ Type: {{ task.type }}<br>
+            ✅ Complete:{{ task.is_complete }}<br>
+            🕒 Created at: {{ task.Created_At }}<br>
+            🕒 Updated at: {{ task.Updated_At }}<br>
+            🕒 Deadline: {{ task.deadline }}</p>
+            <a class="update-task"><img src="{% static 'home/pen.svg' %}" alt="Update Task">
+                <div class="update-task-form-popup">
+                    <form method="POST" action="{% url 'edited' task.ID %}">
+                        <fieldset class="form-container" style="padding:0.9em;width:inherit;display:flex;height:auto;flex-direction:column;flex-wrap:nowrap">
+                            <legend><h1>update task</h1></legend>
+                            {% csrf_token %}
+                            <div><button id="close-btn">X</button></div>
+                            <label for="">Modify task's title</label>
+                            <input type="text" name="title" value="{{task.title}}" class="form-control">
+                            <label>Select category</label>
+                            <select name="category" value="{{task.category}}" class="form-control">
+                                <option value="low" {% if task.category == "low" %}selected{% endif %}>Low</option>
+                                <option value="medium" {% if task.category == "medium" %}selected{% endif %}>Medium</option>
+                                <option value="high" {% if task.category == "high" %}selected{% endif %}>High</option>
+                            </select>
+                            <label>Modify type</label><br>
+                            <select name="type" value="{{task.type}}" class="form-control">
+                                <option value="normal" {% if task.type == "normal" %}selected{% endif %}>Normal</option>
+                                <option value="urgent" {% if task.type == "urgent" %}selected{% endif %}>Urgent</option>
+                            </select>
+                            {% if task.is_complete  %}
+                            <label for="is_complete">Mark as complete</label>
+                            <input type="checkbox" name="is_complete"{% if task.is_complete %} checked{% endif %}>
+                            <label for="type">Modify deadline</label>
+                            <input type="datetime-local" name="deadline" value="{{ task.deadline|date:'Y-m-d\\TH:i' }}" class="form-control">
+                            <button type="submit">Save</button>
+                        </fieldset>
+                    </form>
+                </div>
+            </a>
+            <a class="delete-task"><img src="{% static 'home/trash.svg' %}" alt="Delete Task"></a>
+        </div>
+        {% endfor %}
+    {% endif %}
+
+</div>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "root.html" %}
+{% load static %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'home/index.css' %}">
+{% endblock %}
+
+{% block content %}
+<div>
+        <form method="POST">
+            <fieldset class="form-container">
+                <legend style="text-align: center;"><h1>add task</h1></legend>
+                {% csrf_token %}
+                    <label for="{{ form.title.id_for_label }}">Enter task's title</label><br>
+                    {{ form.title }}
+                    <br><br><label for="{{ form.category.id_for_label }}">Select category</label><br>
+                    {{ form.category }}
+                    <br><br><label for="{{ form.type.id_for_label }}">Select type</label><br>
+                    {{ form.type }}
+                    <br><br>{{ form.is_complete }}<label for="{{ form.is_complete.id_for_label }}">complete</label>
+                    <br><br><label for="{{ form.deadline.id_for_label }}">Enter task's deadline</label><br>{{ form.deadline }}
+                    <br><button type="submit">Save</button>
+            </fieldset>   
+        </form>
+</div>    
+{% endblock %}
