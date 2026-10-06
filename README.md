@@ -1,1 +1,0 @@
-# First-mini-full-stack-project-Django-TodoApp
