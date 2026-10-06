@@ -1,0 +1,52 @@
+{% extends "root.html" %}
+{% load static %}
+
+{% block extra_head %}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+<link rel="stylesheet" href="{% static 'home/bootstrap-icons/bootstrap-icons.css' %}">
+<link rel="stylesheet" href="{% static 'home/index.css' %}">
+{% endblock %}
+{% block content %}
+{% if messages %}
+    {% for message in messages %}
+        <div class="message {{message.tags}}">{{ message }}</div>
+    {% endfor %}
+{% endif %}
+<div class="d-flex justify-content-center flex-column align-items-center p-4 mt-3 ">
+    <form method="post" action="" class="d-flex flex-column align-items-center border border-1 border-primary p-4 rounded-5 bg-light h-auto" style="gap: 2.4em;">
+        {% csrf_token %}
+        <h1 class="font-monospace text-light fw-bolder w-100 text-center text-primary-emphasis rounded-end-5">Sign up</h1>
+        <div style="color: red;" id="errors">
+            {{ form.non_field_errors }}
+            {{ form.username.errors }}
+            {{ form.password1.errors }}
+            {{ form.password2.errors }}
+        </div>
+        <div class="input-group w-15">
+            <span class="input-group-text bg-primary">
+                <i class="bi bi-person-fill text-light"></i>
+            </span>
+            <input type="text" name="username" class="p-2" placeholder="Enter your username" style="outline:none;border: none;">
+        </div>
+        <div class="input-group w-10">
+            <span class="input-group-text bg-primary">
+                <i class="bi bi-key-fill text-light"></i>
+            </span>
+            <input type="password" name="password1" class="p-2" style="outline:none;border: none;" placeholder="Enter your password">
+            <button type="button" class="toggle-password" aria-label="Show password" data-target="password1">
+                <i class="bi bi-eye"></i>
+            </button>
+        </div>
+        <div class="input-group w-10">
+            <span class="input-group-text bg-primary">
+                <i class="bi bi-shield-lock-fill text-light"></i>
+            </span>
+            <input type="password" name="password2" class="p-2" style="outline:none;border: none;" placeholder="Confirm your password">
+            <button type="button" class="toggle-password" aria-label="Show password confirmation" data-target="password2">
+                <i class="bi bi-eye"></i>
+            </button>
+        </div>
+        <button class="btn btn-success p-2 w-30 font-monospace">Register</button>
+    </form>
+</div>
+{% endblock %}
