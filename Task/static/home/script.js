@@ -12,3 +12,17 @@ close_buttons.forEach((close_button,index)=>{
     container_tasks.style.animation="none"
 })
 })
+document.querySelectorAll(".toggle-password").forEach((toggle)=>{
+    toggle.addEventListener("click",()=>{
+        const password_input=toggle.previousElementSibling
+        const icon=toggle.querySelector("i")
+        if (!password_input) return
+        const show_password=password_input.type === "password"
+        password_input.type=show_password ? "text" : "password"
+        if (icon) {
+            icon.classList.toggle("bi-eye",!show_password)
+            icon.classList.toggle("bi-eye-slash",show_password)
+        }
+        toggle.setAttribute("aria-label",show_password ? "Hide password" : "Show password")
+    })
+})

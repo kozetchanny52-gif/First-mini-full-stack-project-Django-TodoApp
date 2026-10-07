@@ -51,7 +51,10 @@
                     </form>
                 </div>
             </a>
-            <a class="delete-task"><img src="{% static 'home/trash.svg' %}" alt="Delete Task"></a>
+            <form method="post" action="{% url 'deleted' task.ID %}" class="delete-task-form">
+                {% csrf_token %}
+                <button type="submit" class="delete-task"><img src="{% static 'home/trash.svg' %}" alt="Delete Task"></button>
+            </form>
         </div>
         {% endfor %}
     {% endif %}
